@@ -1,0 +1,29 @@
+language: go
+
+sudo: required
+dist: trusty
+
+go:
+  - 1.11.x
+  - master
+  - tip
+
+env:
+  - GO111MODULE=on
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - go: master
+    - go: tip
+
+cache: apt
+
+install:
+  - GO111MODULE=auto go get github.com/mattn/goveralls
+
+script:
+  - make travis
+
+after_success:
+  - goveralls -coverprofile=coverage.out -service=travis-ci
