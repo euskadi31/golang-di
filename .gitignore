@@ -7,3 +7,6 @@ example/example
 *.swp
 
 .vscode
+services.go
+
+build/

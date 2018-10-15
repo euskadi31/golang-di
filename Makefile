@@ -1,5 +1,7 @@
 .PHONY: release all test race cover cover-html clean travis
 
+BUILD=build
+
 release:
 	@echo "Release v$(version)"
 	@git pull
@@ -35,3 +37,16 @@ clean:
 	@go clean -i ./...
 
 travis: race coverage.out
+
+${BUILD}/golang-di: $(shell find . -type f -print | grep -v vendor | grep "\.go")
+	@echo "Building golang-di..."
+	@go generate ./cmd/golang-di/
+	@go build -o $@ ./cmd/golang-di/
+
+run-golang-di: ${BUILD}/golang-di
+	@echo "Running golang-di..."
+	@./$< -config ./cmd/golang-di/config.yml
+
+build: ${BUILD}/golang-di
+
+run: run-golang-di

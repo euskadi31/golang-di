@@ -1,24 +1,37 @@
 package demo
 
-// A struct
-type A struct {
+// ServiceA struct
+type ServiceA struct {
 }
 
-// NewA constructor
+// NewServiceA constructor
 // @Service
-func NewA() *A {
-	return &A{}
+func NewServiceA() *ServiceA {
+	return &ServiceA{}
 }
 
-// B struct
-type B struct {
-	a *A
+// ServiceB struct
+type ServiceB struct {
+	a *ServiceA
 }
 
-// NewB constructor
+// NewServiceB constructor
 // @Service
-func NewB(a *A) *B {
-	return &B{
+func NewServiceB(a *ServiceA) *ServiceB {
+	return &ServiceB{
 		a: a,
+	}
+}
+
+// ServiceC struct
+type ServiceC struct {
+	b ServiceB
+}
+
+// NewServiceC constructor
+// @Service
+func NewServiceC(b ServiceB) *ServiceC {
+	return &ServiceC{
+		b: b,
 	}
 }
